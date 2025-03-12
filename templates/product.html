@@ -1,0 +1,274 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>&nbsp;Meadowa&nbsp;</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<link rel="stylesheet" href="../css/product.css">
+</head>
+<body>
+    <!-- header -->
+    <header class="navbar" id="navbar">
+        <div class="logo"><a href="../index.html">Meadowa</a></div>
+        <nav class="head">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." id="search-input">
+                <button id="search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" id="category-btn">Category <i class="fa fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li><a href="#">Dairy Products</a></li>
+                        <li><a href="#">Poultry Products</a></li>
+                        <li><a href="#">Farm Produce</a></li>
+                        <li><a href="#">Beverages</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <!-- Login Button (Hidden if logged in) -->
+            <a href="login-signup.html">
+            <button class="btn" id="login-btn">Login <i class="fa fa-lock"></i></button>
+            </a>
+            <!-- Profile Section (Shown if logged in) -->
+            <div class="profile-dropdown" id="profile-section">
+                <div class="profile-icon" id="profile-btn">
+                    <i class="fa fa-user-circle"></i>
+                </div>
+                <ul class="profile-menu" id="profile-menu">
+                    <li><a href="#">View Profile</a></li>
+                    <li><a href="#" id="logout-btn">Logout</a></li>
+                </ul>
+            </div>
+            <a id="cart" href="cart.html">
+            <div class="cart">
+                <span class="material-icons">shopping_cart</span>
+            </div>
+            </a>
+        </nav>
+    </header>
+
+    <div id="loadingAnimation" style="display: none;">
+        <!-- From Uiverse.io by Nawsome --> 
+        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+            <div class="wheel"></div>
+            <div class="hamster">
+                <div class="hamster__body">
+                    <div class="hamster__head">
+                        <div class="hamster__ear"></div>
+                        <div class="hamster__eye"></div>
+                        <div class="hamster__nose"></div>
+                    </div>
+                    <div class="hamster__limb hamster__limb--fr"></div>
+                    <div class="hamster__limb hamster__limb--fl"></div>
+                    <div class="hamster__limb hamster__limb--br"></div>
+                    <div class="hamster__limb hamster__limb--bl"></div>
+                    <div class="hamster__tail"></div>
+                </div>
+            </div>
+            <div class="spoke"></div>
+        </div>
+    </div>
+    
+	<!-- Product Section -->
+    <section id="products" class="products">
+        <div class="product-container">
+            <div class="product-info">
+                <h2>Meadowa Milk</h2>
+                <div class="rating">
+                    ⭐⭐⭐⭐⭐ (4.8/5 based on 250 reviews)
+                </div>
+                <p>Fresh, pure, and delivered straight from our farm to your home.</p>
+
+                <!-- Choose Type -->
+                <div class="product-selector">
+                    <label for="choose-type">Choose Type:</label>
+                    <select id="choose-size">
+                        <option value="ml">500 ml</option>
+                        <option value="l">Litre</option>
+                    </select>
+                </div>
+
+                <!-- Quantity Selector -->
+                <div class="quantity-selector">
+                    <div class="quantity-controls">
+                        <button class="decrease-btn">-</button>
+                        <input type="number" id="quantity" value="1" min="1" />
+                        <button class="increase-btn">+</button>
+                    </div>
+                </div>
+
+                <!-- Subscription Option -->
+                <div class="subscription-option">
+                    <label for="subscription">Subscribe & Save:</label>
+                    <select id="subscription">
+                        <option value="none">One-time Purchase</option>
+                        <option value="daily">Daily Delivery</option>
+                    </select>
+                </div>
+
+                <p class="delivery-info">🚚 Estimated Delivery: Within 24 Hours</p>
+
+                <!-- Product Icons -->
+                <div class="product-icons">
+                    <span>🌿 100% Organic</span>
+                    <span>🥛 Farm Fresh</span>
+                    <span> No Preservatives</span>
+                </div>
+
+                <!-- Price Display -->
+                <div class="total-price">
+
+                    <div class="price">
+                        <p>Price:&nbsp;</p>
+                        <p id="price" class="product-price">₹35</p>
+                    </div>
+
+                    <div class="price">
+                        <p>Total:&nbsp;</p>
+                        <p id="total-price" class="product-price">₹35</p>
+                    </div>
+                </div>
+                <!-- Add to Cart Button --> 
+                <button class="cartBtn">
+                    <svg class="cartimg" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                    </svg>
+                  ADD TO CART
+                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" class="cart-product">
+                        <path d="M288 0L0 96l288 96 288-96L288 0zM0 128v256c0 17 10.7 32.4 26.9 38.5l245.5 92.6c8.7 3.3 18.3 3.3 27 0l245.5-92.6c16.2-6.1 26.9-21.5 26.9-38.5V128L288 224 0 128z"></path>
+                    </svg>
+
+
+
+                </button>
+            </div>
+
+            <!-- Product Image -->
+            <div class="product-image">
+                <div class="main-img">
+                    <img id="main-img" src="../images/product.png" alt="Milk Product">
+                </div>
+                
+
+                <div class="additional-images">
+                    <button id="prev-btn">&nbsp;◀&nbsp;</button>
+                    <div class="image-slider">
+
+                        <!-- More images can be added here -->
+                    </div>
+                    <button id="next-btn">&nbsp;▶&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- offer section -->
+    <section id="offers" class="offers">
+        <div class="offer-card">
+            <div class="offer-content">
+                <h2>Our &nbsp;Offerings</h2>
+                <div class="offer-details">
+                    <div class="offer-item">
+                        <div class="icon-container">
+                            <i class="fas fa-leaf"></i> <!-- Icon for "Pure & Fresh" -->
+                        </div>
+                        <h3><a href="/pure-fresh">Pure & Fresh</a></h3>
+                        <p>No additives, naturally fed cows.</p>
+                    </div>
+                    <div class="offer-item">
+                        <div class="icon-container">
+                            <i class="fas fa-truck"></i> <!-- Icon for "Farm to Table" -->
+                        </div>
+                        <h3><a href="/farm-to-table">Farm to Table</a></h3>
+                        <p>Quality milk directly from our farm.</p>
+                    </div>
+                    <div class="offer-item">
+                        <div class="icon-container">
+                            <i class="fas fa-heart"></i> <!-- Icon for "Nutrient Rich" -->
+                        </div>
+                        <h3><a href="/nutrient-rich">Nutrient-Rich</a></h3>
+                        <p>Essential vitamins & minerals.</p>
+                    </div>
+                    <div class="offer-item">
+                        <div class="icon-container">
+                            <i class="fas fa-shield-alt"></i> <!-- Icon for "Hygienically Processed" -->
+                        </div>
+                        <h3><a href="/hygienic-processed">Hygienically Processed</a></h3>
+                        <p>Ensuring safety & freshness.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- footer section -->
+    <footer>
+        <section class="wrapper">
+            <section class="top">
+                <div class="item_large">
+                    <h1>
+                        <a href="#">Medova</a>
+                    </h1>
+                    <p>From Our Farm to Your Home.</p>
+                </div>
+                <div class="item">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-cow"></i> Fresh Milk</a></li>
+                        <li><a href="#"><i class="fa-solid fa-egg"></i> Organic Eggs</a></li>
+                        <li><a href="#"><i class="fa-solid fa-carrot"></i> Farm-Fresh Vegetables</a></li>
+                        <li><a href="#"><i class="fa-solid fa-apple-whole"></i> Fruit Baskets</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-headset"></i>Contact us</a></li>
+                        <li><a href="#"><i class="fas fa-truck"></i> Delivery Details</a></li>
+                        <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to get the latest farm updates.</p>
+                    <form action="/subscribe/" method="post" class="ajax">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="YOUR_CSRF_TOKEN">
+                        <input type="email" placeholder="Your email address" name="email">
+                        <button type="submit">
+                            <i class="fa-solid fa-location-arrow"></i>
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <section class="bottom">
+                <p class="left">
+                    &copy; 2025 Medova Milks. All Rights Reserved. <a href="#">Privacy Policy</a>
+                </p>
+                <div class="social">
+                    <ul>
+                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+                    </ul>
+                </div>
+            </section>
+        </section>
+    </footer>
+
+
+    <!-- scripts -->
+    <script src="../js/product.js"></script>
+</body>
+</html>

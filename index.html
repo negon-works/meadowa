@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&nbsp;Meadowa&nbsp;</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/favicon.png" sizes="32x32" >
+</head>
+<body>
+    <!-- header -->
+    <header class="navbar" id="navbar">
+        <div class="logo"><a href="#">Meadowa</a></div>
+        <nav class="head">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." id="search-input">
+                <button id="search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" id="category-btn">Category <i class="fa fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li><a href="templates/product.html">Dairy Products</a></li>
+                        <li><a href="" style="color: red !important;">coming soon...</a></li>
+                        <!--<li><a href="#">Poultry Products</a></li>
+                        <li><a href="#">Farm Produce</a></li>
+                        <li><a href="#">Beverages</a></li> -->
+                    </ul>
+                </li>
+            </ul>
+            
+            <!-- Login Button (Hidden if logged in) -->
+            <a href="templates/login-signup.html">
+            <button class="btn" id="login-btn">Login <i class="fa fa-lock"></i></button>
+            
+            <!-- Profile Section (Shown if logged in) -->
+            <div class="profile-dropdown" id="profile-section">
+                <div class="profile-icon" id="profile-btn">
+                    <i class="fa fa-user-circle"></i>
+                </div>
+                <ul class="profile-menu" id="profile-menu">
+                    <li><a href="#">View Profile</a></li>
+                    <li><a href="#" id="logout-btn">Logout</a></li>
+                </ul>
+            </div>
+            <a href="templates/cart.html">
+                <div class="cart">
+                    <i id="cart" class="fa fa-shopping-basket"></i>
+                </div>
+            </a>
+        </nav>
+    </header>
+
+    <div id="loadingAnimation" style="display: none;">
+        <!-- From Uiverse.io by Nawsome --> 
+        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+            <div class="wheel"></div>
+            <div class="hamster">
+                <div class="hamster__body">
+                    <div class="hamster__head">
+                        <div class="hamster__ear"></div>
+                        <div class="hamster__eye"></div>
+                        <div class="hamster__nose"></div>
+                    </div>
+                    <div class="hamster__limb hamster__limb--fr"></div>
+                    <div class="hamster__limb hamster__limb--fl"></div>
+                    <div class="hamster__limb hamster__limb--br"></div>
+                    <div class="hamster__limb hamster__limb--bl"></div>
+                    <div class="hamster__tail"></div>
+                </div>
+            </div>
+            <div class="spoke"></div>
+        </div>
+    </div>
+
+
+    <!-- hero section -->
+    <section class="hero" id="hero1">
+        <video autoplay muted loop >
+            <source src="images/bg-hero.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h3>Pure | Fresh | Natural</h3>
+            <h1>From our farm to your home.</h1>
+        </div>
+    </section>
+
+
+    <!-- what is meadowa -->
+    <section id="what-is-meadowa">
+        <section class="top">
+            <section class="wrapper">
+                <div class="arrow-wrapper">
+                    <div class="arrow_wht"></div> <!-- Downward Arrow -->
+                </div>
+                <h6>WHAT IS MEADOWA</h6>
+                <h3>
+                    Bringing nature’s purity to your home through ethical and sustainable farming.
+                </h3>
+            </section>
+        </section>
+
+        <section class="content">
+            <section class="wrapper">
+                <section class="items">
+                    <div class="item">
+                        <h4>
+                            <span class="label">Meadowa</span>
+                            A Farm with Sustainability at its Core
+                        </h4>
+                        <p>
+                            We practice eco-friendly farming that ensures minimal environmental impact while maintaining high-quality, fresh products.
+                        </p>
+                    </div>
+
+                    <div class="item">
+                        <h4>
+                            <span class="label">Meadowa</span>
+                            Freshness Delivered Daily
+                        </h4>
+                        <p>
+                            Our farm-to-home delivery service brings fresh dairy, eggs, and organic produce straight to your doorstep.
+                        </p>
+                    </div>
+
+                    <div class="item">
+                        <h4>
+                            <span class="label">Meadowa</span>
+                            Supporting Local Farmers
+                        </h4>
+                        <p>
+                            We empower small-scale farmers by ensuring fair trade, allowing them to continue producing high-quality organic goods.
+                        </p>
+                    </div>
+
+                    <div class="item">
+                        <h4>
+                            <span class="label">Meadowa</span>
+                            Ethical & Humane Animal Care
+                        </h4>
+                        <p>
+                            Our animals are raised in stress-free, natural environments, ensuring healthy and nutrient-rich produce.
+                        </p>
+                    </div>
+                    <div class="item_btn">
+                        <h4>
+                            <a href="#" id="item_btn">Learn More</a>
+                        </h4>
+                    </div>
+
+                </section>
+            </section>
+        </section>
+
+        <hr class="line">
+    </section>
+
+
+    <!-- Our products -->
+    <section class="our-products-section">
+
+        <section class="our-products">
+            <h1>Our Products</h1>
+            <div class="product-categories">
+                <!-- Dairy Products -->
+                <div class="category-card">
+                    <h2>Dairy Products</h2>
+                    <div class="product-list">
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 1.png" alt="Product 1">
+                                <p>Product 1</p>
+                            </a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 2.png" alt="Product 2">
+                                <p>Product 2</p>
+                            </a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 3.png" alt="Product 3">
+                                <p>Product 3</p>
+                            </a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 4.png" alt="Product 4">
+                                <p>Product 4</p>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/products/category/dairy" class="view-all">View All</a>
+                </div>
+
+                <!-- Poultry Products -->
+                <div class="category-card">
+                    <h2>Poultry Products</h2>
+                    <div class="product-list">
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 5.png" alt="Product 5">
+                                <p>Product 5</p>
+                            </a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 6.png" alt="Product 6">
+                                <p>Product 6</p>
+                            </a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 7.png" alt="Product 7">
+                                <p>Product 7</p>
+                            </a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                                <img src="images/Products/Product 8.png" alt="Product 8">
+                                <p>Product 8</p>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/products/category/poultry" class="view-all">View All</a>
+                </div>
+
+                <!-- Farm Produce -->
+                
+                <div class="category-card">
+                    <h2>Vegetables & Fruits</h2>
+                    <div class="product-list">
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 9.png" alt="Product 9">
+                            <p>Product 9</p></a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 10.png" alt="Product 10">
+                            <p>Product 10</p></a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 11.png" alt="Product 11">
+                            <p>Product 11</p></a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 12.png" alt="Product 12">
+                            <p>Product 12</p></a>
+                        </div>
+                    </div>
+                    <a href="/products/category/farm-produce" class="view-all">View All</a>
+                </div>
+
+                <!-- Beverages & Specialty Items -->
+                <div class="category-card">
+                    <h2>Honey & Juices</h2>
+                    <div class="product-list">
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 13.png" alt="Product 13">
+                            <p>Product 13</p></a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 14.png" alt="Product 14">
+                            <p>Product 14</p></a> 
+                        </div>
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 15.png" alt="Product 15">
+                            <p>Product 15</p></a>
+                        </div>
+                        <div class="product">
+                            <a href="">
+                            <img src="images/Products/Product 16.png" alt="Product 16">
+                            <p>Product 16</p></a>
+                        </div>
+                    </div>
+                    <a href="/products/category/beverages" class="view-all">View All</a>
+                </div>
+                <a href="/products" class="main-view-all">View All Products</a>
+            </div>
+            
+        </section>
+    </section>
+
+
+    <!-- first-cta -->
+    <section class="firstcta">
+        <section id="first-cta">
+            <section class="first-cta">
+                <div class="cta-text">
+                    <h2><i class="fas fa-cow"></i> Fresh Dairy,<br> Directly from Our Farm</h2>
+                    <p>Subscribe for daily delivery and enjoy unbeatable offers on milks! <br> 
+                        Get access to exclusive discounts like <span style="color: #c5d109; font-weight: bold;">₹150/L</span> for Punganur cow (ayurvedic) milk, 
+                        <span style="color: #c5d109; font-weight: bold;">₹80/L</span> for high-quality milk (Gir, Jersey), and much more....<br> 
+                        all delivered fresh to your doorstep
+                    </p>
+
+                    <div class="cta-buttons">
+                        <button class="btn browse">
+                            <i class="fas fa-th-list"></i> See Offers
+                        </button>
+                        <button class="btn subscribe">
+                            <i class="fas fa-calendar-day"></i> Subscribe for Daily Delivery
+                        </button>
+                    </div>
+                    <p class="subscription-info"><i class="fas fa-truck"></i> Get guaranteed fresh deliveries every day with our subscription service.</p>
+                </div>
+            </section>
+        </section>
+    </section>
+
+
+    <!-- FAQ section -->
+    <section id="faq">
+        <section class="wrapper">
+            <section class="content">
+                <section class="tab_head">
+                    <ul>
+                        <li><a data-id="first_tab" href="javascript:void(0)" class="active">Why Choose Us?</a></li>
+                        <li><a data-id="second_tab" href="javascript:void(0)">Our Ideal Customers</a></li>
+                    </ul>
+                </section>
+                <section class="tab_body">
+                    <div id="first_tab" class="item active">
+                        <ul>
+                            <li><h4>Minimally Processed</h4>
+                                <p>Retains natural goodness. Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Velit corporis illum culpa maiores vel, voluptate ipsam, sequi commodi blanditiis inventore non aliquam, necessitatibus odio ipsa veritatis eligendi ea nisi alias.</p>
+                            </li>
+                            <li><h4>Ethical Farming</h4>
+                                <p>Sustainable practices. Lorem ipsum dolor sit amet consectetur adipisicing, elit. Sed voluptas reiciendis atque tenetur laborum porro voluptatem magnam esse excepturi a deleniti ipsum minima nobis optio eos, quibusdam itaque delectus voluptatibus?</p>
+                            </li>
+                            <li><h4>Convenient Delivery</h4>
+                                <p>Fresh milk to your door. Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam in facilis ab commodi vitae maiores ut accusamus laudantium atque quidem, repellendus veritatis cum unde at nobis similique hic quaerat aliquam.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="second_tab" class="item">
+                        <ul>
+                            <li><h4>Health-Conscious Families</h4>
+                                <p>Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Asperiores eaque, facilis dicta nesciunt cumque neque vel rerum enim aliquam reprehenderit nisi. Dolores, porro commodi, reiciendis dolorem reprehenderit placeat quas temporibus.</p> 
+                            </li>
+                            <li><h4>Fitness Enthusiasts</h4>
+                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus voluptates delectus ex, ab, sunt totam? Asperiores mollitia molestiae praesentium inventore consectetur? Numquam minima, a deserunt, eaque sunt quibusdam sapiente odio.</p> 
+                            </li>
+                            <li><h4>Organic & Farm-Fresh Lovers</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum dolore suscipit quisquam nobis fuga dolorum fugit culpa doloremque esse aperiam! Dignissimos voluptate ipsa accusamus deleniti praesentium vitae perspiciatis, maxime obcaecati?</p> 
+                            </li>
+                            <li><h4>Home Chefs & Bakers</h4>
+                                <p>Lorem ipsum dolor, sit, amet consectetur adipisicing elit. Voluptatum, perferendis soluta assumenda quasi repudiandae debitis delectus voluptas magnam placeat eum, non reiciendis hic, quia odit rem vitae eius ex, voluptatem?</p> 
+                            </li>
+                            <li><h4>Elderly Consumers</h4>
+                                <p>Lorem ipsum dolor sit, amet consectetur, adipisicing elit. Tempora, officiis facilis, exercitationem ab animi repellendus error iusto, harum beatae explicabo neque ipsa quaerat minima, aspernatur aliquam? Doloribus voluptas nobis provident?</p> 
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </section>
+
+
+    <!-- testimonials section -->
+    <section id="testimonials" class="testimonials">
+        <h2>Testimonials</h2>
+        <div class="testimonial-slider-container">
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <img src="images/cow1.png" alt="Customer">
+                    <blockquote>“Meadowa Milks is a game changer for our family! The milk is consistently fresh and tastes incredible.”</blockquote>
+                    <p>– Sarah M., Happy Parent</p>
+                </div>
+                <div class="testimonial">
+                    <img src="images/cow1.png" alt="Customer">
+                    <blockquote>“As a fitness enthusiast, I appreciate the nutrient-rich profile of Meadowa Milks.”</blockquote>
+                    <p>– James T., Fitness Trainer</p>
+                </div>
+                <div class="testimonial">
+                    <img src="images/cow1.png" alt="Customer">
+                    <blockquote>“The milk is consistently fresh and tastes incredible.”</blockquote>
+                    <p>– John P., Chef</p>
+                </div>
+                <div class="testimonial">
+                    <img src="images/cow1.png" alt="Customer">
+                    <blockquote>“I’ve never tasted anything like it! Absolutely delicious.”</blockquote>
+                    <p>– Mark S., Restaurant Owner</p>
+                </div>
+            </div>
+            <div class="controls">
+                <span class="arrow left">&#x21E6;</span>
+                <span class="arrow right">&#x21E8;</span>
+            </div>
+            <div class="dots">
+                <!-- Dots will be created dynamically -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- footer -->
+    <footer>
+        <section class="wrapper">
+            <div class="item_large">
+                    <h1>
+                        <a href="#">Meadowa</a>
+                    </h1>
+                    <p>From Our Farm to Your Home.</p>
+                </div>
+            <section class="top">
+                
+                <div class="item">
+                    <h3>Make Money with Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-store"></i> Sell products on Meadowa</a></li>
+                        <li><a href="#"><i class="fa fa-motorcycle"></i> Become a Delivery Partner</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-cow"></i> Dairy Products</a></li>
+                        <li><a href="#"><i class="fa-solid fa-egg"></i> Poultry Products</a></li>
+                        <li><a href="#"><i class="fa-solid fa-carrot"></i> Farm-Fresh Vegetables & Fruits</a></li>
+                        <li><a href="#"><i class="fa-solid fa-martini-glass-citrus"></i> Juices & Honey</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-headset"></i>Contact us</a></li>
+                        <li><a href="#"><i class="fas fa-truck"></i> Delivery Details</a></li>
+                        <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to get the latest farm updates.</p>
+                    <form action="/subscribe/" method="post" class="ajax">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="YOUR_CSRF_TOKEN">
+                        <input type="email" placeholder="Your email address" name="email">
+                        <button type="submit">
+                            <i class="fa-solid fa-location-arrow"></i>
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <section class="bottom">
+                <p class="left">
+                    &copy; 2025 Meadova. All Rights Reserved. <a href="#">Privacy Policy</a>
+                </p>
+                <div class="social">
+                    <ul>
+                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+                    </ul>
+                </div>
+            </section>
+        </section>
+    </footer>
+
+    <!-- scripts -->
+    <script src="js/script.js"></script>
+</body>
+</html>
