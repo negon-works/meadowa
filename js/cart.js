@@ -1,4 +1,52 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Category Dropdown
+    const categoryBtn = document.getElementById("category-btn");
+    const dropdownMenu = document.getElementById("dropdown-menu");
+
+    categoryBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        dropdownMenu.classList.toggle("active");
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!categoryBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove("active");
+        }
+    });
+
+    // Profile Dropdown
+    const profileBtn = document.getElementById("profile-btn");
+    const profileMenu = document.getElementById("profile-menu");
+
+    if (profileBtn) {
+        profileBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            profileMenu.classList.toggle("active");
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
+                profileMenu.classList.remove("active");
+            }
+        });
+    }
+
+    // Simulate login system (For Testing)
+    const loginBtn = document.getElementById("login-btn");
+    const profileSection = document.getElementById("profile-section");
+    
+    loginBtn.addEventListener("click", function () {
+        loginBtn.style.display = "none"; // Hide login button
+        profileSection.style.display = "block"; // Show profile section
+    });
+
+    document.getElementById("logout-btn").addEventListener("click", function () {
+        profileSection.style.display = "none"; // Hide profile
+        loginBtn.style.display = "block"; // Show login button
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
         updateCartTotal(); // Initial total price update
 
         // Initialize item-total with data-price
