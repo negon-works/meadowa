@@ -465,6 +465,8 @@
     .cart {
         border-radius: 20px;
         border: 2px solid #A88D60;
+        color: #A88D60;
+        
         padding: 5px 20px;
     }
 

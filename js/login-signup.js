@@ -28,3 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    var loadingAnimation = document.getElementById("loadingAnimation");
+    loadingAnimation.style.display = "block";
+});
+window.addEventListener("load", function() {
+    var loadingAnimation = document.getElementById("loadingAnimation");
+    loadingAnimation.style.display = "none";
+});
