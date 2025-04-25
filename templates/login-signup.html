@@ -1,125 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login/Signup Form</title>
-    <link rel="stylesheet" href="../css/login-signup.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login/Signup Form</title>
+  <link rel="stylesheet" href="{% static 'css/login-signup.css' %}">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
-  <body>
+<body>
 
-
-    <div id="loadingAnimation" style="display: none;">
-        <!-- From Uiverse.io by Nawsome --> 
-        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
-            <div class="wheel"></div>
-            <div class="hamster">
-                <div class="hamster__body">
-                    <div class="hamster__head">
-                        <div class="hamster__ear"></div>
-                        <div class="hamster__eye"></div>
-                        <div class="hamster__nose"></div>
-                    </div>
-                    <div class="hamster__limb hamster__limb--fr"></div>
-                    <div class="hamster__limb hamster__limb--fl"></div>
-                    <div class="hamster__limb hamster__limb--br"></div>
-                    <div class="hamster__limb hamster__limb--bl"></div>
-                    <div class="hamster__tail"></div>
-                </div>
-            </div>
-            <div class="spoke"></div>
+  <div class="container">
+    <div class="form-box login">
+      <form method="POST" action="{% url 'web:account' %}">
+        {% csrf_token %}
+        <input type="hidden" name="login_form" value="1">  <!-- Identifies Login Form -->
+        <h1>Login</h1>
+        <div class="input-box">
+          <div class="input-field">
+            <input type="text" name="username" required>
+            <label for="username">Username</label>
+          </div>
+          <i class="bx bxs-user"></i>
         </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input type="password" name="password" required>
+            <label for="password">Password</label>
+          </div>
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+        
+        <button type="submit" class="btn">Login</button>
+      </form>
     </div>
 
-    <!-- credits to the writter @leonam-silva-de-souza -->
-      <div class="container">
-          <div class="form-box login">
-              <form action="#">
-                  <h1>Login</h1>
-                  <div class="input-box">
-                    <div class="input-field">
-                      <input type="text" id="Username" required>
-                      <label for="username">Userame</label>
-                    </div>
-                      <i class='bx bxs-user'></i>
-                  </div>
-
-                  <div class="input-box">
-                    <div class="input-field">
-                      <input type="password" required>
-                      <label for="username">Password</label>
-                    </div>
-                      <i class='bx bxs-lock-alt' ></i>
-                  </div>
-                  
-                  <div class="forgot-link">
-                      <a href="#">Forgot Password?</a>
-                  </div>
-                  <button type="submit" class="btn">Login</button>
-                  <p>or login with social platforms</p>
-                  <div class="social-icons">
-                      <a href="#"><i class='bx bxl-google' ></i></a>
-                      <a href="#"><i class='bx bxl-facebook' ></i></a>
-                      <a href="#"><i class='bx bxl-github' ></i></a>
-                      <a href="#"><i class='bx bxl-linkedin' ></i></a>
-                  </div>
-              </form>
+    <div class="form-box register">
+      <form method="POST" action="{% url 'web:account' %}">
+        {% csrf_token %}
+        <input type="hidden" name="signup_form" value="1">  <!-- Identifies Signup Form -->
+        <h1>Registration</h1>
+        <div class="input-box">
+          <div class="input-field">
+            <input type="text" name="username" required>
+            <label for="username">Username</label>
           </div>
+          <i class="bx bxs-user"></i>
+        </div>
 
-          <div class="form-box register">
-              <form action="#">
-                  <h1>Registration</h1>
-
-                  <div class="input-box">
-                    <div class="input-field">
-                      <input type="text" id="Username" required>
-                      <label for="username">Userame</label>
-                    </div>
-                      <i class='bx bxs-user'></i>
-                  </div>
-
-                  <div class="input-box">
-                    <div class="input-field">
-                      <input type="email" required>
-                      <label for="email">Email</label>
-                    </div>
-                      <i class='bx bxs-envelope' ></i>
-                  </div>
-                  <div class="input-box">
-                    <div class="input-field">
-                      <input type="password" required>
-                      <label for="username">Password</label>
-                    </div>
-                      <i class='bx bxs-lock-alt' ></i>
-                  </div>
-
-                  <button type="submit" class="btn">Register</button>
-                  <p>or register with social platforms</p>
-                  <div class="social-icons">
-                      <a href="#"><i class='bx bxl-google' ></i></a>
-                      <a href="#"><i class='bx bxl-facebook' ></i></a>
-                      <a href="#"><i class='bx bxl-github' ></i></a>
-                      <a href="#"><i class='bx bxl-linkedin' ></i></a>
-                  </div>
-              </form>
+        <div class="input-box">
+          <div class="input-field">
+            <input type="email" name="email" required>
+            <label for="email">Email</label>
           </div>
+          <i class="bx bxs-envelope"></i>
+        </div>
 
-          <div class="toggle-box">
-              <div class="toggle-panel toggle-left">
-                  <h1>Welcome Back!</h1>
-                  <p>Don't have an account?</p>
-                  <button class="btn register-btn">Register</button>
-              </div>
-
-              <div class="toggle-panel toggle-right">
-                  <h1>Hello, Welcome!</h1>
-                  <p>Already have an account?</p>
-                  <button class="btn login-btn">Login</button>
-              </div>
+        <div class="input-box">
+          <div class="input-field">
+            <input type="password" name="password" required>
+            <label for="password">Password</label>
           </div>
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input type="password" name="confirm_password" required>
+            <label for="confirm_password">Confirm Password</label>
+          </div>
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+      </form>
+    </div>
+
+    <div class="toggle-box">
+      <div class="toggle-panel toggle-left">
+        <h1>Welcome Back!</h1>
+        <p>Don't have an account?</p>
+        <button class="btn register-btn">Register</button>
       </div>
 
-      <script src="../js/login-signup.js"></script>
-  </body>
+      <div class="toggle-panel toggle-right">
+        <h1>Hello, Welcome!</h1>
+        <p>Already have an account?</p>
+        <button class="btn login-btn">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/auth.js' %}"></script>
+</body>
 </html>

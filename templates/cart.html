@@ -1,357 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>&nbsp;Meadowa&nbsp;</title>
-	<link rel="stylesheet" href="../css/cart.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Cart - Meadowa{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock extra_css %}
 
-    
-    <div id="loadingAnimation" style="display: none;">
-        <!-- From Uiverse.io by Nawsome --> 
-        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
-            <div class="wheel"></div>
-            <div class="hamster">
-                <div class="hamster__body">
-                    <div class="hamster__head">
-                        <div class="hamster__ear"></div>
-                        <div class="hamster__eye"></div>
-                        <div class="hamster__nose"></div>
-                    </div>
-                    <div class="hamster__limb hamster__limb--fr"></div>
-                    <div class="hamster__limb hamster__limb--fl"></div>
-                    <div class="hamster__limb hamster__limb--br"></div>
-                    <div class="hamster__limb hamster__limb--bl"></div>
-                    <div class="hamster__tail"></div>
+{% block content %}
+<main>
+    <section class="cart-container">
+        {% for item in cart_items %}
+        <div class="cart-item" data-price="{{ item.variant.product_price }}" data-delivery="{{ item.variant.delivery_price }}">
+            <a href="{% url 'web:product' item.product.id %}">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-item-img">
+            </a>
+            <div class="cart-item-details">
+                <h3 class="cart-item-name">
+                    {{ item.product.name }}{% if item.variant.size %} ({{ item.variant.size }}){% endif %}
+                </h3>
+
+                <div class="cart-breakdown">
+                    <p>Price: ₹<span class="item-price">{{ item.variant.product_price }}</span></p>
+                    <p>Delivery: ₹<span class="delivery-charge">{{ item.variant.delivery_price }}</span></p>
+                    <p>Total: ₹<span class="item-total">{{ item.item_total }}</span></p> <!-- Item total -->
                 </div>
-            </div>
-            <div class="spoke"></div>
-        </div>
-    </div>
 
+                <div class="cart-item-quantity">
+                    <button class="quantity-decrease" data-variant="{{ item.variant.id }}">−</button>
+                    <input type="text" value="{{ item.quantity }}" class="quantity-input" readonly>
+                    <button class="quantity-increase" data-variant="{{ item.variant.id }}">+</button>
+                </div>
 
+                <button class="remove-item" data-variant="{{ item.variant.id }}">
+                    <!-- SVG icon for removal -->
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 69 14"
+                    class="svgIcon bin-top"
+                  >
+                    <g clip-path="url(#clip0_35_24)">
+                      <path
+                        fill="black"
+                        d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
+                      ></path>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_35_24">
+                        <rect fill="white" height="14" width="69"></rect>
+                      </clipPath>
+                    </defs>
+                  </svg>
 
-
-	<!-- header -->
-    <header class="navbar" id="navbar">
-        <div class="logo"><a href="../index.html">Meadowa</a></div>
-        <nav class="head">
-            <div class="search-container">
-                <input type="text" placeholder="Search..." id="search-input">
-                <button id="search-btn">
-                    <i class="fa fa-search"></i>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 69 57"
+                    class="svgIcon bin-bottom"
+                  >
+                    <g clip-path="url(#clip0_35_22)">
+                      <path
+                        fill="black"
+                        d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
+                      ></path>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_35_22">
+                        <rect fill="white" height="57" width="69"></rect>
+                      </clipPath>
+                    </defs>
+                  </svg>
                 </button>
             </div>
-
-            <ul class="nav-links">
-                <li><a href="../index.html">Home</a></li>
-                <li class="dropdown">
-                    <a href="error.html" id="category-btn">Category <i class="fa fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu" id="dropdown-menu">
-                        <li><a href="product.html">Dairy Products</a></li>
-                        <li><a href="error.html" style="color: red !important;">site underwork!</a></li>
-                        <!--<li><a href="error.html">Poultry Products</a></li>
-                        <li><a href="error.html">Farm Produce</a></li>
-                        <li><a href="error.html">Beverages</a></li> -->
-                    </ul>
-                </li>
-            </ul>
-            
-            <!-- Login Button (Hidden if logged in) -->
-            <a href="login-signup.html">
-                <button class="btn" id="login-btn">Login <i class="fa fa-lock"></i></button>
-            </a>
-            
-            <!-- Profile Section (Shown if logged in) -->
-            <div class="profile-dropdown" id="profile-section">
-                <div class="profile-icon" id="profile-btn">
-                    <i class="fa fa-user-circle"></i>
-                </div>
-                <ul class="profile-menu" id="profile-menu">
-                    <li><a href="error.html">View Profile</a></li>
-                    <li><a href="error.html" id="logout-btn">Logout</a></li>
-                </ul>
-            </div>
-            <a id="cart" href="#">
-            <div class="cart">
-                <span class="material-icons">shopping_cart</span>
-            </div>
-            </a>
-        </nav>
-    </header>
-
-
-    <div id="loadingAnimation" style="display: none;">
-        <!-- From Uiverse.io by Nawsome --> 
-        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
-            <div class="wheel"></div>
-            <div class="hamster">
-                <div class="hamster__body">
-                    <div class="hamster__head">
-                        <div class="hamster__ear"></div>
-                        <div class="hamster__eye"></div>
-                        <div class="hamster__nose"></div>
-                    </div>
-                    <div class="hamster__limb hamster__limb--fr"></div>
-                    <div class="hamster__limb hamster__limb--fl"></div>
-                    <div class="hamster__limb hamster__limb--br"></div>
-                    <div class="hamster__limb hamster__limb--bl"></div>
-                    <div class="hamster__tail"></div>
-                </div>
-            </div>
-            <div class="spoke"></div>
         </div>
-    </div>
+        {% endfor %}
 
-    <section class="cart-container">
-        <h2>Your Shopping Cart</h2>
-
-        <!-- Cart Items -->
-        <div class="cart-items">
-            <div class="cart-item" data-price="80">
-                <img src="../images/Products/Product 1.png" alt="Product Image" class="cart-item-img">
-                <div class="cart-item-details">
-                    <h3 class="cart-item-name">Product Name</h3>
-                    <p class="cart-item-price">₹<span class="item-total">999</span></p>
-                    <div class="cart-item-quantity">
-                        <button class="quantity-decrease">−</button>
-                        <input type="text" value="1" class="quantity-input">
-                        <button class="quantity-increase">+</button>
-                    </div>
-
-
-                    <button class="remove-item">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 69 14"
-                        class="svgIcon bin-top"
-                      >
-                        <g clip-path="url(#clip0_35_24)">
-                          <path
-                            fill="black"
-                            d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
-                          ></path>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_35_24">
-                            <rect fill="white" height="14" width="69"></rect>
-                          </clipPath>
-                        </defs>
-                      </svg>
-
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 69 57"
-                        class="svgIcon bin-bottom"
-                      >
-                        <g clip-path="url(#clip0_35_22)">
-                          <path
-                            fill="black"
-                            d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
-                          ></path>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_35_22">
-                            <rect fill="white" height="57" width="69"></rect>
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </button>
-
-                </div>
-            </div>
-
-            <div class="cart-item" data-price="150">
-                <img src="../images/Products/Product 2.png" alt="Product Image" class="cart-item-img">
-                <div class="cart-item-details">
-                    <h3 class="cart-item-name">Product Name</h3>
-                    <p class="cart-item-price">₹<span class="item-total"></span></p>
-                    <div class="cart-item-quantity">
-                        <button class="quantity-decrease">−</button>
-                        <input type="text" value="1" class="quantity-input">
-                        <button class="quantity-increase">+</button>
-                    </div>
-
-
-                    <button class="remove-item">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 69 14"
-                        class="svgIcon bin-top"
-                      >
-                        <g clip-path="url(#clip0_35_24)">
-                          <path
-                            fill="black"
-                            d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
-                          ></path>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_35_24">
-                            <rect fill="white" height="14" width="69"></rect>
-                          </clipPath>
-                        </defs>
-                      </svg>
-
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 69 57"
-                        class="svgIcon bin-bottom"
-                      >
-                        <g clip-path="url(#clip0_35_22)">
-                          <path
-                            fill="black"
-                            d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
-                          ></path>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_35_22">
-                            <rect fill="white" height="57" width="69"></rect>
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </button>
-
-                </div>
-            </div>
-
-            <div class="cart-item" data-price="50">
-                <img src="../images/Products/Product 13.png" alt="Product Image" class="cart-item-img">
-                <div class="cart-item-details">
-                    <h3 class="cart-item-name">Product Name</h3>
-                    <p class="cart-item-price">₹<span class="item-total">999</span></p>
-                    <div class="cart-item-quantity">
-                        <button class="quantity-decrease">−</button>
-                        <input type="text" value="1" class="quantity-input">
-                        <button class="quantity-increase">+</button>
-                    </div>
-
-                    <button class="remove-item">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 69 14"
-                        class="svgIcon bin-top"
-                      >
-                        <g clip-path="url(#clip0_35_24)">
-                          <path
-                            fill="black"
-                            d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
-                          ></path>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_35_24">
-                            <rect fill="white" height="14" width="69"></rect>
-                          </clipPath>
-                        </defs>
-                      </svg>
-
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 69 57"
-                        class="svgIcon bin-bottom"
-                      >
-                        <g clip-path="url(#clip0_35_22)">
-                          <path
-                            fill="black"
-                            d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
-                          ></path>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_35_22">
-                            <rect fill="white" height="57" width="69"></rect>
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </button>
-                </div>
-            </div>
-            <!-- Duplicate this block for more items -->
-        </div>
-
-        <!-- Cart Summary -->
         <div class="cart-summary">
-            <p>Total: ₹<span class="cart-total-price">999</span></p>
-            <button class="checkout-btn">Proceed to Checkout</button>
+          <p>Subtotal: ₹<span class="cart-total-price">0.00</span></p>
+          <p>Delivery Charges: ₹<span class="cart-delivery-charge">0.00</span></p>
+          <hr>
+          <p><strong>Grand Total: ₹<span class="cart-grand-total">0.00</span></strong></p>
+          <br>
+          <a href="{% url 'web:checkout' %}" class="checkout-btn" >Proceed to checkout</a>
         </div>
     </section>
+</main>
 
-
-    <!-- footer -->
-    <footer>
-        <section class="wrapper">
-            <div class="item_large">
-                    <h1>
-                        <a href="../index.html">Meadowa</a>
-                    </h1>
-                    <p>From Our Farm to Your Home.</p>
-                </div>
-            <section class="top">
-                
-                <div class="item">
-                    <h3>Make Money with Us</h3>
-                    <ul>
-                        <li><a href="error.html"><i class="fa fa-store"></i> Sell products on Meadowa</a></li>
-                        <li><a href="error.html"><i class="fa fa-motorcycle"></i> Become a Delivery Partner</a></li>
-                    </ul>
-                </div>
-                <div class="item">
-                    <h3>Categories</h3>
-                    <ul>
-                        <li><a href="error.html"><i class="fa-solid fa-cow"></i> Dairy Products</a></li>
-                        <li><a href="error.html"><i class="fa-solid fa-egg"></i> Poultry Products</a></li>
-                        <li><a href="error.html"><i class="fa-solid fa-carrot"></i> Farm-Fresh Vegetables & Fruits</a></li>
-                        <li><a href="error.html"><i class="fa-solid fa-martini-glass-citrus"></i> Juices & Honey</a></li>
-                    </ul>
-                </div>
-                <div class="item">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="error.html"><i class="fa fa-headset"></i>Contact us</a></li>
-                        <li><a href="error.html"><i class="fas fa-truck"></i> Delivery Details</a></li>
-                        <li><a href="login-signup.html"><i class="fa fa-lock"></i> Login</a></li>
-                    </ul>
-                </div>
-                <div class="item">
-                    <h3>Stay Updated</h3>
-                    <p>Subscribe to get the latest farm updates.</p>
-                    <form action="/subscribe/" method="post" class="ajax">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="YOUR_CSRF_TOKEN">
-                        <input type="email" placeholder="Your email address" name="email">
-                        <button type="submit">
-                            <i class="fa-solid fa-location-arrow"></i>
-                        </button>
-                    </form>
-                </div>
-            </section>
-            <section class="bottom">
-                <p class="left">
-                    &copy; 2025 Meadova. All Rights Reserved. <a href="error.html">Privacy Policy</a>
-                </p>
-                <div class="social">
-                    <ul>
-                        <li><a href="error.html"><i class="fa-brands fa-facebook-f"></i></a></li>
-                        <li><a href="error.html"><i class="fa-brands fa-instagram"></i></a></li>
-                        <li><a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
-                    </ul>
-                </div>
-            </section>
-        </section>
-    </footer>
-
-
-    <script src="../js/cart.js"></script>
-
-</body>
-</html>
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock content %}

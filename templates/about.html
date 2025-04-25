@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Home | Meadowa {% endblock %}
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    {% endblock extra_css %}
+{% block content %}
+<body class="index-page">
+    <!-- hero section -->
+    <section class="hero" id="hero1">
+        <video autoplay muted loop >
+            <source src="{% static 'images/bg-hero.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h3>Pure | Fresh | Natural</h3>
+            <h1>From our farm to your home.</h1>
+        </div>
+    </section>
+
+        <!-- what is meadowa -->
+        <section id="what-is-meadowa">
+            <section class="top">
+                <section class="wrapper">
+                    <div class="arrow-wrapper">
+                        <div class="arrow_wht"></div> <!-- Downward Arrow -->
+                    </div>
+                    <h6>WHAT IS MEADOWA</h6>
+                    <h3>
+                        Bringing nature’s purity to your home through ethical and sustainable farming.
+                    </h3>
+                </section>
+            </section>
+
+            <section class="content">
+                <section class="wrapper">
+                    <section class="items">
+                        <div class="item">
+                            <h4>
+                                <span class="label">Meadowa</span>
+                                A Farm with Sustainability at its Core
+                            </h4>
+                            <p>
+                                We practice eco-friendly farming that ensures minimal environmental impact while maintaining high-quality, fresh products.
+                            </p>
+                        </div>
+
+                        <div class="item">
+                            <h4>
+                                <span class="label">Meadowa</span>
+                                Freshness Delivered Daily
+                            </h4>
+                            <p>
+                                Our farm-to-home delivery service brings fresh dairy, eggs, and organic produce straight to your doorstep.
+                            </p>
+                        </div>
+
+                        <div class="item">
+                            <h4>
+                                <span class="label">Meadowa</span>
+                                Supporting Local Farmers
+                            </h4>
+                            <p>
+                                We empower small-scale farmers by ensuring fair trade, allowing them to continue producing high-quality organic goods.
+                            </p>
+                        </div>
+
+                        <div class="item">
+                            <h4>
+                                <span class="label">Meadowa</span>
+                                Ethical & Humane Animal Care
+                            </h4>
+                            <p>
+                                Our animals are raised in stress-free, natural environments, ensuring healthy and nutrient-rich produce.
+                            </p>
+                        </div>
+                        <div class="item_btn">
+                            <h4>
+                                <a href="{% url 'web:error' %}" id="item_btn">Learn More</a>
+                            </h4>
+                        </div>
+
+                    </section>
+                </section>
+            </section>
+
+            <hr class="line">
+        </section>
+</body>
+{% endblock %}

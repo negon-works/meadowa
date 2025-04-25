@@ -1,0 +1,255 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+  }
+  
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: url("../images/seller_login.png") no-repeat center/cover;
+  }
+  #loginForm, #signupForm {
+    display: none; /* Hide both initially */
+  }
+
+  #loginForm.active, #signupForm.active {
+    display: block; /* Show only the active one */
+  }
+
+  .form-box {
+    width: 100%; /* Full width for mobile */
+    max-width: 600px; /* Set max width to 600px for PC */
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 2em;
+    color: #fff;
+  }
+  /* Step Progress Indicator */
+  .progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Space between the steps and the form */
+  }
+  
+  .step-box {
+    flex: 1; /* Equal width for each step */
+    text-align: center;
+    padding: 10px 0;
+    background: #CDAA7D; /* Background color for the active step */
+    color: #fff;
+    border-radius: 10px;
+    transition: background 0.3s;
+  }
+  
+  .step-box.active {
+    background: #FFD700; /* Highlight color for the active step */
+  }
+  
+  .line {
+    height: 4px;
+    background: #CDAA7D; /* Line color */
+    flex: 1; /* Make the line stretch to fill the space */
+  }
+  
+  /* Form Visibility */
+  .form {
+    display: none;
+  }
+  
+  .form.active {
+    display: block;
+  }
+  
+  /* Input Fields */
+  .inputbox {
+    position: relative;
+    margin: 15px 0; /* Margin for spacing */
+    width: 100%; /* Full width */
+  }
+  /* Chrome, Safari, Edge */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    background-color: #f5f5f500 !important;
+    color: #333 !important;
+    border-radius: 8px;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  
+  .inputbox input,
+  .inputbox select,
+  .inputbox textarea {
+    width: 100%;
+    height: 50px;
+    background: transparent; /* Keep background transparent */
+    border: none; /* No border to remove the default style */
+    outline: none;
+    font-size: 1em;
+    padding: 0 35px 0 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  .inputbox select{
+    color: #fff;
+  }
+  .inputbox select option{
+    color: #333;
+    background: #ffffff;
+  }
+  .inputbox input,
+  .inputbox select,
+  .inputbox textarea {
+    border-bottom: 1px solid #fff;
+  }
+  ::placeholder{
+    color: #fff;
+    font-weight: normal;
+  }
+  /* Input Field Labels */
+  .inputbox label {
+    position: absolute;
+    top: 65%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 1em;
+    pointer-events: none;
+    transition: 0.5s;
+  }
+  .inputbox #idproof{
+    top: -5px;
+  }
+  
+  input:focus ~ label,
+  select:focus ~ label,
+  textarea:focus ~ label,
+  input:valid ~ label,
+  select:valid ~ label,
+  textarea:valid ~ label {
+    top: -5px;
+  }
+  
+  /* Postal and Phone Number Styles */
+  .flex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .inputbox ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+  
+  /* Forget Section */
+  .forget {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #fff;
+    margin: 10px 0 15px;
+  }
+  
+  .forget label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .forget input[type="checkbox"] {
+    margin-right: 6px;
+  }
+  
+  .forget a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .forget a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Buttons */
+  button,
+  .next-btn,
+  .prev-btn {
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    background: #CDAA7D;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    color: white;
+    margin-top: 20px;
+  }
+  
+  .prev-btn {
+    margin-right: 20px;
+  }
+  
+  /* Register Section */
+  .register {
+    font-size: 0.9em;
+    color: #fff;
+    margin: 25px 0 10px;
+  }
+  
+  .register a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .register a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Multi-Step Form */
+  .step {
+    display: none;
+  }
+  
+  .step.active {
+    display: block;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .form-box {
+      width: 95%; /* Full width for smaller screens */
+    }
+  
+    .inputbox {
+      margin: 10px 0; /* More compact for smaller screens */
+    }
+  
+    .flex-row {
+      flex-direction: column; /* Stack fields vertically on small screens */
+    }
+  
+    .select-group {
+      flex-direction: column; /* Stack city and state vertically on small screens */
+    }
+  }

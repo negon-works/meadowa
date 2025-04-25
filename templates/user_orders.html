@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<style>
+.status-stamp {
+    display: inline-block;
+    padding: 6px 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid;
+    border-radius: 0.5rem;
+    transform: rotate(-2deg);
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+.delivered-stamp {
+    color: #166534;
+    border-color: #166534;
+    background-color: #dcfce7;
+}
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="mt-24 h-full bg-gray-100">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+        {% include 'profile-nav.html' %}
+
+        <div class="mt-6">
+            {% block profile_content %}
+<h2 class="text-3xl font-semibold mt-16 mb-6">Your Orders</h2>
+
+<div class="space-y-6">
+    {% for order in orders %}
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="flex justify-between items-center px-6 py-4 border-b">
+            <div class="text-lg font-medium">Order #{{ order.id }}</div>
+            <div class="text-gray-500">{{ order.ordered_at|date:"M d, Y" }}</div>
+        </div>
+        
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between flex-wrap mb-2">
+                {% with order.order_status|lower|cut:" " as status %}
+                    {% if status == "delivered" %}
+                        <div class="inline-block px-3 py-1 text-xs font-bold text-green-800 bg-green-100 border-2 border-green-600 rounded-md transform -rotate-2 shadow-md uppercase tracking-wider">
+                            ✅ Delivered
+                        </div>
+                    {% else %}
+                        <div class="text-sm font-medium text-gray-700">
+                            Status: <span class="text-indigo-600">{{ order.order_status|capfirst }}</span>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            
+                <div class="text-xs text-gray-500 mt-1 sm:mt-0">
+                    Updated at {{ order.status_updated_at|date:"M d, Y h:i A" }}
+                </div>
+            </div>
+            
+            
+
+            <!-- Loop over order items -->
+            {% for item in order.order_items.all %}
+            <div class="flex items-center space-x-4 mb-4">
+                <!-- Product Image -->
+                <div class="flex-shrink-0">
+                    <img class="w-16 h-16 object-cover rounded-md" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                </div>
+
+                <div class="flex-1 ml-4">
+                    <!-- Product Name and Size -->
+                    <div class="font-semibold text-lg text-gray-800">
+                        {{ item.product.name }} ({{ item.variant.size }})
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        Qty: {{ item.quantity }}
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        Price: ₹{{ item.product_price }} x {{ item.quantity }}
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        Delivery: ₹{{ item.delivery_price }}
+                    </div>
+                    <hr class="my-2">
+                    <div class="text-lg font-semibold text-gray-900">
+                        Total: ₹{{ item.product_price|add:item.delivery_price }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Total price for all items in the order -->
+            <div class="mt-4">
+                <div class="text-lg font-semibold text-gray-900">
+                    Order Total: ₹{{ order.grand_total }}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'web:user_order_details' order.id %}" class="text-indigo-600 hover:text-indigo-900">
+                    View Order Details
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</div>
+</div>
+</div>
+{% endblock %}

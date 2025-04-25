@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home - Meadowa{% endblock title %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+		<div class="container">
+		    <!-- Filters -->
+		    <div class="flt">
+				<div class="filters">
+					<select id="categoryFilter">
+						<option value="all">All Categories</option>
+						{% for category in categories %}
+							<option value="{{ category|lower }}">{{ category }}</option>
+						{% endfor %}
+					</select>
+					
+	
+					<select id="priceSort">
+						<option value="Default">Default Price </option>
+						<option value="low">Low to High</option>
+						<option value="high">High to Low</option>
+					</select>
+				</div>
+			</div>
+
+		    <!-- Product Grid -->
+		    <div class="product-container">
+				
+				{% for product in products %}
+				<div class="card" data-category="{{ product.category|lower }}" data-price="{{ product.min_price }}">
+					<a href="{% url 'web:product' product.id %}">
+						<div class="cardimg">
+							<img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img">
+						</div>
+						<div class="card-info">
+							<p class="text-title" style="text-align: center;">{{ product.name }}</p>
+							<p class="text-body">{{ product.short_description }}</p>
+							<p class="text-body">
+								<strong>Sizes:</strong> <br>
+								{% for variant in product.variants.all %}
+									<span class="size-tag">{{ variant.size }}</span>&nbsp;
+								{% endfor %}
+							</p>
+						</div>
+						<div class="card-footer">
+							<span class="text-title">₹{{ product.min_price }}</span>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+
+			
+				
+		    </div>
+		</div>
+
+	{% block extra_js %}
+	    <script src="{% static 'js/products.js' %}"></script>
+	{% endblock extra_js %}
+{% endblock content %}
+
+
+
+

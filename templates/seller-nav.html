@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <title>{% block title %}Meadowa{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="{% static 'css/seller_dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add-product.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    
+
+
+</head>
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <div class="flex min-h-screen">
+        <div class="w-64 bg-white shadow-lg">
+            <div class="p-5 text-center font-bold text-2xl text-gray-800 border-b">
+                Seller Dashboard
+            </div>
+            <nav class="mt-5">
+                <a href="{% url 'web:seller_dashboard' %}" class="block py-3 px-5 text-gray-700 hover:bg-gray-100">Dashboard</a>
+                <a href="{% url 'web:add_product' %}" class="block py-3 px-5 text-gray-700 hover:bg-gray-100">Add Product</a>
+                <a href="{% url 'web:seller_orders' %}" class="block py-3 px-5 text-gray-700 hover:bg-gray-100">Manage Orders</a>
+                <a href="{% url 'web:my_products' %}" class="block py-3 px-5 text-gray-700 hover:bg-gray-100">My Products</a>
+                <a href="{% url 'web:profile' %}" class="block py-3 px-5 text-gray-700 hover:bg-gray-100">Profile</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-5">
+            {% block content %}
+            <!-- Your content will go here -->
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>

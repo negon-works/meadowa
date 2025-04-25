@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Home | Meadowa {% endblock %}
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+
+    
+    {% endblock extra_css %}
+{% block content %}
+<body class="index-page">
+
+   <main>
+        <!-- hero section -->
+        <section class="hero" id="hero1">
+            <video autoplay muted loop >
+                <source src="{% static 'images/bg-hero.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-content">
+                <h3>Pure | Fresh | Natural</h3>
+                <h1>From our farm to your home.</h1>
+            </div>
+        </section>
+
+
+        <section id="what-is-meadowa" class="bg-[#FFFFFF] py-16 px-6 md:px-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+              
+              <!-- Text Content -->
+              <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold text-[#A88D60] mb-6 leading-tight">
+                  Straight from the Farm <br> to Your Doorstep 🚜
+                </h1>
+                <p class="text-gray-700 text-lg md:text-xl mb-8">
+                  Taste the freshness you deserve. No middlemen. No compromise. Just pure, local goodness delivered fast.
+                </p>
+                <a href="/products/" class="inline-block bg-[#A88D60] text-white text-lg font-semibold py-3 px-6 rounded-lg hover:bg-[#927751] transition-all shadow-md">
+                  Start Shopping Now
+                </a>
+              </div>
+          
+              <!-- Working Image -->
+              <div class="flex justify-center md:justify-end">
+                <img src="{% static 'images/hero1.png'%}" alt="Farm Fresh" class=" w-full max-w-md object-cover">
+              </div>
+            </div>
+          </section>
+<hr><hr><br><br>
+        <!-- Our products -->
+<section class="our-products-section py-0 bg-white">
+  <div class="flex justify-center items-center py-5">
+    <h3 class="text-3xl font-semibold text-[#A88D60] mb-4 border-b-2 border-[#A88D60] inline-block pb-1 text-center">
+      Categories
+    </h3>
+  </div>
+  <section class="our-products">
+    <div class="product-categories grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6 pb-12">
+      <!-- Dairy -->
+      <a href="/products/?category=dairy" class="relative block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-64 transform hover:scale-105 perspective-1000">
+        <img src="{% static 'images/categories/dairy.jpg' %}" alt="Dairy Products" class="w-full h-full object-cover transition-all duration-500">
+        <div class="absolute inset-0 flex justify-center items-center">
+          <p class="text-white text-2xl font-bold transition-all duration-500 transform hover:rotate-y-180">
+            Dairy Products
+          </p>
+        </div>
+      </a>
+      <!-- Poultry -->
+      <a href="/products/?category=poultry" class="relative block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-64 transform hover:scale-105 perspective-1000">
+        <img src="{% static 'images/categories/poultry.jpg' %}" alt="Poultry Products" class="w-full h-full object-cover transition-all duration-500">
+        <div class="absolute inset-0 flex justify-center items-center">
+          <p class="text-white text-2xl font-bold transition-all duration-500 transform hover:rotate-y-180">
+            Poultry Products
+          </p>
+        </div>
+      </a>
+      <!-- Farm Produce -->
+      <a href="/products/?category=Fruits%20%26%20Vegs" class="relative block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-64 transform hover:scale-105 perspective-1000">
+        <img src="{% static 'images/categories/veggies.jpg' %}" alt="Vegetables & Fruits" class="w-full h-full object-cover transition-all duration-500">
+        <div class="absolute inset-0 flex justify-center items-center">
+          <p class="text-white text-2xl font-bold transition-all duration-500 transform hover:rotate-y-180">
+            Vegetables & Fruits
+          </p>
+        </div>
+      </a>
+      <!-- Beverages -->
+      <a href="/products/?category=Juices%20%26%20Honeys" class="relative block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-64 transform hover:scale-105 perspective-1000">
+        <img src="{% static 'images/categories/beverages.jpg' %}" alt="Juices & Honeys" class="w-full h-full object-cover transition-all duration-500">
+        <div class="absolute inset-0 flex justify-center items-center">
+          <p class="text-white text-2xl font-bold transition-all duration-500 transform hover:rotate-y-180">
+            Juices & Honeys
+          </p>
+        </div>
+      </a>
+    </div>
+  </section>
+</section>
+<hr><br>
+<div class="product-container" style="display: flex;flex-direction: column;">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-auto">
+  {% for product in products|slice:":16" %}
+  <div class="card" data-category="{{ product.category }}" data-price="{{ product.min_price }}">
+      <a href="{% url 'web:product' product.id %}">
+          <div class="cardimg">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img">
+          </div>
+          <div class="card-info">
+              <p class="text-title" style="text-align: center;">{{ product.name }}</p>
+              <p class="text-body">{{ product.short_description }}</p>
+              <p class="text-body">
+                  <strong>Sizes:</strong> <br>
+                  {% for variant in product.variants.all %}
+                      <span class="size-tag">{{ variant.size }}</span>&nbsp;
+                  {% endfor %}
+              </p>
+          </div>
+          <div class="card-footer">
+              <span class="text-title">₹{{ product.min_price }}</span>
+          </div>
+      </a>
+  </div>
+  {% endfor %}
+  </div>
+  <!-- Button inside the product container -->
+  <div class="col-span-4 flex justify-center mt-6">
+    <a href="{% url 'web:products' %}">
+      <button class="bg-[#A88D60] hover:bg-[#8f7a56] text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out">
+        View All
+      </button>
+    </a>
+  </div>
+</div> <br><br><br>
+<hr><br><br><br>
+        <!-- FAQ section -->
+        <section id="faq">
+            <section class="wrapper">
+                <section class="content">
+                    <section class="tab_head">
+                        <ul>
+                            <li><a data-id="first_tab" href="javascript:void(0)" class="active">Why Choose Us?</a></li>
+                            <li><a data-id="second_tab" href="javascript:void(0)">Our Ideal Customers</a></li>
+                        </ul>
+                    </section>
+                    <section class="tab_body">
+                        <div id="first_tab" class="item active">
+                            <ul>
+                                <li><h4>Minimally Processed</h4>
+                                    <p>Retains natural goodness. Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Velit corporis illum culpa maiores vel, voluptate ipsam, sequi commodi blanditiis inventore non aliquam, necessitatibus odio ipsa veritatis eligendi ea nisi alias.</p>
+                                </li>
+                                <li><h4>Ethical Farming</h4>
+                                    <p>Sustainable practices. Lorem ipsum dolor sit amet consectetur adipisicing, elit. Sed voluptas reiciendis atque tenetur laborum porro voluptatem magnam esse excepturi a deleniti ipsum minima nobis optio eos, quibusdam itaque delectus voluptatibus?</p>
+                                </li>
+                                <li><h4>Convenient Delivery</h4>
+                                    <p>Fresh milk to your door. Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam in facilis ab commodi vitae maiores ut accusamus laudantium atque quidem, repellendus veritatis cum unde at nobis similique hic quaerat aliquam.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="second_tab" class="item">
+                            <ul>
+                                <li><h4>Health-Conscious Families</h4>
+                                    <p>Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Asperiores eaque, facilis dicta nesciunt cumque neque vel rerum enim aliquam reprehenderit nisi. Dolores, porro commodi, reiciendis dolorem reprehenderit placeat quas temporibus.</p> 
+                                </li>
+                                <li><h4>Fitness Enthusiasts</h4>
+                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus voluptates delectus ex, ab, sunt totam? Asperiores mollitia molestiae praesentium inventore consectetur? Numquam minima, a deserunt, eaque sunt quibusdam sapiente odio.</p> 
+                                </li>
+                                <li><h4>Organic & Farm-Fresh Lovers</h4>
+                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum dolore suscipit quisquam nobis fuga dolorum fugit culpa doloremque esse aperiam! Dignissimos voluptate ipsa accusamus deleniti praesentium vitae perspiciatis, maxime obcaecati?</p> 
+                                </li>
+                                <li><h4>Home Chefs & Bakers</h4>
+                                    <p>Lorem ipsum dolor, sit, amet consectetur adipisicing elit. Voluptatum, perferendis soluta assumenda quasi repudiandae debitis delectus voluptas magnam placeat eum, non reiciendis hic, quia odit rem vitae eius ex, voluptatem?</p> 
+                                </li>
+                                <li><h4>Elderly Consumers</h4>
+                                    <p>Lorem ipsum dolor sit, amet consectetur, adipisicing elit. Tempora, officiis facilis, exercitationem ab animi repellendus error iusto, harum beatae explicabo neque ipsa quaerat minima, aspernatur aliquam? Doloribus voluptas nobis provident?</p> 
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <!-- testimonials section -->
+        <section id="testimonials" class="testimonials">
+            <h2>Testimonials</h2>
+            <div class="testimonial-slider-container">
+                <div class="testimonial-slider">
+                    <div class="testimonial">
+                        <img src="{% static 'images/cow1.png' %}" alt="Customer">
+                        <blockquote>“The milk is consistently fresh and tastes incredible.”</blockquote>
+                        <p>– Sarah M., Happy Parent</p>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{% static 'images/cow1.png' %}" alt="Customer">
+                        <blockquote>“As a fitness enthusiast, I appreciate the nutrient-rich profile of Meadowa Milks.”</blockquote>
+                        <p>– James T., Fitness Trainer</p>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{% static 'images/cow1.png' %}" alt="Customer">
+                        <blockquote>“You can trust the Meadowa products 100%”</blockquote>
+                        <p>– John P., Chef</p>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{% static 'images/cow1.png' %}" alt="Customer">
+                        <blockquote>“I’ve never tasted anything like it! Absolutely delicious.”</blockquote>
+                        <p>– Mark S., Restaurant Owner</p>
+                    </div>
+                </div>
+                <div class="controls">
+                    <span class="arrow left">&#x21E6;</span>
+                    <span class="arrow right">&#x21E8;</span>
+                </div>
+                <div class="dots">
+                    <!-- Dots will be created dynamically -->
+                </div>
+            </div>
+        </section>
+   </main>
+   
+   </body>
+   {% block extra_js %}
+    {% endblock extra_js %}
+{% endblock %}

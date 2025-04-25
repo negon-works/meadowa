@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Search Results - Meadowa{% endblock title %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container">
+    <!-- Filters -->
+    <div class="filters">
+        <select id="priceSort">
+            <option value="Default">Sort by Price</option>
+            <option value="low">Low to High</option>
+            <option value="high">High to Low</option>
+        </select>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-container">
+        {% if products %}
+            {% for product in products %}
+                <div class="card" data-category="{{ product.category }}" data-price="{{ product.min_price }}">
+                    <a href="{% url 'web:product' product.id %}">
+                        <div class="cardimg">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img">
+                        </div>
+                        <div class="card-info">
+                            <p class="text-title" style="text-align: center;">{{ product.name }}</p>
+                            <p class="text-body">{{ product.short_description }}</p>
+                            <p class="text-body">
+                                <strong>Sizes:</strong> <br>
+                                {% for variant in product.variants.all %}
+                                    <span class="size-tag">{{ variant.size }}</span>&nbsp;
+                                {% endfor %}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="text-title">₹{{ product.min_price }}</span>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- ✅ Show "No results found" only when no matches -->
+            <div class="no-results">
+                <p>No results found for "<strong>{{ query }}</strong>", showing all products.</p>
+            </div>
+
+            <!-- ✅ Show all products if no results -->
+            {% for product in all_products %}
+                <div class="card" data-category="{{ product.category }}" data-price="{{ product.min_price }}">
+                    <a href="{% url 'web:product' product.id %}">
+                        <div class="cardimg">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img">
+                        </div>
+                        <div class="card-info">
+                            <p class="text-title" style="text-align: center;">{{ product.name }}</p>
+                            <p class="text-body">{{ product.short_description }}</p>
+                            <p class="text-body">
+                                <strong>Sizes:</strong> <br>
+                                {% for variant in product.variants.all %}
+                                    <span class="size-tag">{{ variant.size }}</span>&nbsp;
+                                {% endfor %}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="text-title">₹{{ product.min_price }}</span>
+                            <button class="card-button">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+    
+
+{% block extra_js %}
+    <script src="{% static 'js/search.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const priceSort = document.getElementById("priceSort");
+    const productGrid = document.querySelector(".product-container"); // ✅ Corrected!
+
+    priceSort.addEventListener("change", function () {
+        const sortType = priceSort.value;
+        let productCards = Array.from(productGrid.getElementsByClassName("card"));
+
+        if (sortType === "low") {
+            productCards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+        } else if (sortType === "high") {
+            productCards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+        }
+
+        // Clear and append sorted cards
+        productGrid.innerHTML = "";
+        productCards.forEach((card) => productGrid.appendChild(card));
+    });
+});
+
+    </script>
+{% endblock extra_js %}
+{% endblock content %}

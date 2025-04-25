@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Meadowa {% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/tailwind.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    {% block extra_css %}
+       
+    {% endblock extra_css %}
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.png' %}" sizes="32x32">
+</head>
+<body>
+
+    <!-- Loading Animation -->
+    <div id="loadingAnimation" style="display: none;">
+        <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+            <div class="wheel"></div>
+            <div class="hamster">
+                <div class="hamster__body">
+                    <div class="hamster__head">
+                        <div class="hamster__ear"></div>
+                        <div class="hamster__eye"></div>
+                        <div class="hamster__nose"></div>
+                    </div>
+                    <div class="hamster__limb hamster__limb--fr"></div>
+                    <div class="hamster__limb hamster__limb--fl"></div>
+                    <div class="hamster__limb hamster__limb--br"></div>
+                    <div class="hamster__limb hamster__limb--bl"></div>
+                    <div class="hamster__tail"></div>
+                </div>
+            </div>
+            <div class="spoke"></div>
+        </div><br><br>
+        <span class="loading-text">Loading...</span>
+    </div>
+    
+
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="logo"><a href="{% url 'web:index' %}" class="{% if request.path == '/' %}active{% endif %}">Meadowa</a></div>
+        <nav class="head">
+            <div class="search-container">
+                <form action="{% url 'web:search_results' %}" method="GET">
+                    <input type="text" name="q" placeholder="Search..." id="search-input" value="{{ query }}">
+                </form>
+                <button type="submit" id="search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="{% url 'web:index' %}" class="{% if request.path == '/' %}active{% endif %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'web:about' %}" class="{% if request.path == '/' %}active{% endif %}" class="nav-link">About</a></li>
+                <li class="dropdown">
+                    <a href="#" id="category-btn" class="nav-link">Category <i class="fa fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li><a href="{% url 'web:products' %}" class="{% if request.path == 'products/' %}active{% endif %}">All Products</a></li>
+                        <li><a href="/products/?category=dairy" class="{% if request.path == 'products/' %}active{% endif %}">Diary</a></li>
+                        <li><a href="/products/?category=poultry" class="{% if request.path == 'products/' %}active{% endif %}">Poultry</a></li>
+                        <li><a href="/products/?category=Fruits%20%26%20Vegs" class="{% if request.path == 'products/' %}active{% endif %}">Fruits & Vegies</a></li>
+                        <li><a href="/products/?category=Juices%20%26%20Honeys" class="{% if request.path == 'products/' %}active{% endif %}">Fresh Juices</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+                <!-- Profile Dropdown -->
+                <!-- Profile Section (Visible After Login) -->
+                <div class="profile-dropdown" id="profile-section" {% if user.is_authenticated %}style="display: flex;"{% else %}style="display: none;"{% endif %}>
+                    <div class="profile-icon">
+                        <a href="{% url 'web:profile' %}" class="profile-icon"><i class="fa fa-user-circle"></i></a>
+                    </div>
+                </div>
+                
+
+                <!-- Login Button (Visible Before Login) -->
+                <a href="{% url 'web:account' %}" class="nav-link" id="login-btn" {% if user.is_authenticated %}style="display: none;"{% else %}style="display: block !important;"{% endif %}>
+                    Login <i class="fa fa-lock"></i>
+                </a>
+
+
+            <!-- Cart -->
+            <a id="cart" href="{% url 'web:cart' %}" class="{% if request.path == 'cart/' %}active{% endif %}">
+                <div class="cart">
+                    <span class="material-icons">shopping_cart</span>
+                </div>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <section class="wrapper">
+            <div class="item_large">
+                <h1><a href="{% url 'web:index' %}">Meadowa</a></h1>
+                <p>From Our Farm to Your Home.</p>
+            </div>
+            <section class="top">
+                <div class="item">
+                    <h3>Make Money with Us</h3>
+                    <ul>
+                        <li>
+                            <a href="{% url 'web:become_seller' %}" class="nav-link" id="become-seller-link"
+                                {% if user.is_authenticated %}
+                                    {% if user.seller_profile %}
+                                        {% if user.seller_profile.status == 'pending' %}
+                                            style="display: none;"
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            >
+                                <i class="fa fa-store"></i> Sell products on Meadowa
+                            </a>
+                        </li>
+                        <li><a href="{% url 'web:error' %}"><i class="fa fa-motorcycle"></i> Become a Delivery Partner</a></li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="{% url 'web:contact' %}"><i class="fa fa-headset"></i> Contact us</a></li>
+                        <li><a href="{% url 'web:error' %}"><i class="fas fa-truck"></i> Delivery Details</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="item">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to get the latest farm updates.</p>
+                    <form id="newsletter-form" class="ajax" method="post">
+
+                        {% csrf_token %}
+                        <input type="email" placeholder="Your email address" name="email"  style="color: black !important;">
+                        <button type="submit">
+                            <i class="fa-solid fa-location-arrow"></i>
+                        </button>
+                    </form>
+                    
+                    <p id="subscription-message" style="display: none; color: green;"></p>
+                </div>
+                
+                
+                
+            </section>
+            <section class="bottom">
+                <p class="left">
+                    &copy; 2025 Meadowa. All Rights Reserved. <a href="{% url 'web:privacy_policy' %}">Privacy Policy</a>
+                </p>
+                <div class="social">
+                    <ul>
+                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+                    </ul>
+                </div>
+            </section>
+        </section>
+    </footer>
+
+    <!-- Scripts -->
+    
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- SweetAlert Message Handler -->
+{% if messages %}
+  <script id="django-messages-data" type="application/json">
+    [
+      {% for message in messages %}
+        {
+          "message": "{{ message|escapejs }}",
+          "tags": "{{ message.tags }}"
+        }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  </script>
+  <script src="{% static 'js/flash_messages.js' %}"></script>
+{% endif %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        const becomeSellerLink = document.getElementById('become-seller-link');
+        const sellerStatus = "{% if user.seller_profile %}{{ user.seller_profile.status }}{% else %}''{% endif %}"; // Safely handle the seller profile status
+
+        // Hide the link if status is 'pending', 'rejected', or 'approved'
+        if (sellerStatus === 'pending' || sellerStatus === 'rejected' || sellerStatus === 'approved') {
+            if (becomeSellerLink) {
+                becomeSellerLink.style.display = 'none';  // Hide the link if the seller status is 'pending', 'rejected', or 'approved'
+            }
+        } else {
+            if (becomeSellerLink) {
+                becomeSellerLink.style.display = 'block';  // Show the link if the seller status is anything other than 'pending', 'rejected', or 'approved'
+            }
+        }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#newsletter-form').on('submit', function(event) {
+            event.preventDefault();  // Prevent form submission
+
+            var email = $('input[name="email"]').val();
+            var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+
+            if (email !== '') {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "web:newsletter_subscription" %}',
+                    data: {
+                        'email': email,
+                        'csrfmiddlewaretoken': csrfToken
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Subscribed!',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                        $('#newsletter-form')[0].reset(); // Clear form
+                    },
+                    error: function(response) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops!',
+                            text: response.responseJSON.message || 'Something went wrong.',
+                        });
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Email Required',
+                    text: 'Please enter a valid email address.',
+                });
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
