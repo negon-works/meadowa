@@ -3,7 +3,7 @@ services:
     name: meadowa
     env: python
     buildCommand: ./build.sh
-    startCommand: gunicorn meadowa.wsgi:application
+    startCommand: python manage.py migrate && gunicorn meadowa.wsgi:application
     envVars:
       - key: DEBUG
         value: false

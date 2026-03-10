@@ -18,6 +18,7 @@ python manage.py runserver
 - Create a Render Web Service from the repo.
 - Render can use `render.yaml` automatically.
 - Set any extra environment variables you need in Render.
+- If you stay on SQLite, run migrations at service startup instead of during build.
 
 ## Important note
 
