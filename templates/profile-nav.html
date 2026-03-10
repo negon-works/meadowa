@@ -1,0 +1,19 @@
+<!-- profile-nav.html -->
+<div class="flex items-center space-x-6 pb-6 border-b">
+    {% if user.profile.profile_pic %}
+        <img src="{{ user.profile.profile_pic.url }}" class="w-24 h-24 rounded-full border" alt="Profile Picture">
+    {% else %}
+        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="w-24 h-24 rounded-full border" alt="Profile Picture">
+    {% endif %}
+    <div>
+        <h2 class="text-2xl font-semibold">{{ user.username }}</h2>
+        <p class="text-gray-600">{{ user.email }}</p>
+        <button class="mt-3 px-5 py-2 text-white rounded bg-[#CDAA7D] hover:bg-[#D7B188]" onclick="openModal()">Edit Profile</button>
+    </div>
+</div>
+
+<div class="mt-6 flex space-x-6 border-b">
+    <a href="{% url 'web:profile' %}" class="tab-link px-4 py-3 text-gray-600 hover:text-[#CDAA7D] {% if section == 'profile' %}text-[#CDAA7D]{% endif %}">Profile</a>
+    <a href="{% url 'web:user_orders' %}" class="tab-link px-4 py-3 text-gray-600 hover:text-[#CDAA7D] {% if section == 'orders' %}text-[#CDAA7D]{% endif %}">Orders</a>
+    <a href="{% url 'web:profile_settings' %}" class="tab-link px-4 py-3 text-gray-600 hover:text-[#CDAA7D] {% if section == 'settings' %}text-[#CDAA7D]{% endif %}">Settings</a>
+</div>

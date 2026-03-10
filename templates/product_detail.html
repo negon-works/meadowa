@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ product.name }} - Meadowa{% endblock title %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<main class=" products bg-gray-100 py-10 ">
+    <div class="container mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white shadow-lg rounded-xl p-6">
+            
+            <!-- Product Image Section -->
+            <div class="space-y-4">
+                <div class="relative">
+                    <img id="main-img" src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+                <!-- Thumbnail Slider -->
+                <div class="flex space-x-3 overflow-x-auto">
+                    {% for image in product.images.all %}
+                        <img src="{{ image.image.url }}" alt="Product Image" class="w-16 h-16 cursor-pointer rounded-md border border-gray-300 hover:border-gray-500" onclick="changeImage('{{ image.image.url }}')">
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Product Info Section -->
+            <div class="space-y-6">
+                <h1 class="text-3xl font-bold text-gray-800">{{ product.name }}</h1>
+                <div class="text-sm text-gray-600">
+                    Sold by: <span class="font-medium text-gray-800">{{ seller.store_name }}</span>
+                    {% if seller.user %}
+                        <span class="ml-1">(@{{ seller.user.username }})</span>
+                    {% endif %}
+                </div>
+                <p class="text-gray-600">{{ product.short_description }}</p>
+
+                <!-- Choose Size/Type -->
+                <div class="space-y-2">
+                    <label for="choose-size" class="text-sm font-medium text-gray-700">Choose Type:</label>
+                    <select id="choose-size" class="w-full border rounded-md px-3 py-2">
+                        {% for variant in variants %}
+                        <option value="{{ variant.id }}" 
+                                data-price="{{ variant.product_price }}" 
+                                data-stock="{{ variant.product_stock }}" 
+                                data-delivery="{{ variant.delivery_price }}">
+                            {{ variant.size }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Stock Info -->
+                <div id="stock-info" class="text-sm text-green-600"></div>
+
+                <!-- Quantity and Subscription Option -->
+                <div class="flex space-x-4 items-center">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Quantity:</label>
+                        <div class="flex items-center space-x-2">
+                            <button class="decrease-btn px-3 py-1 rounded-lg" style="background-color: #CDAA7D;">-</button>
+                            <input type="number" id="quantity" value="1" min="1" class="w-12 border rounded-md px-2 text-center" />
+                            <button class="increase-btn px-3 py-1 rounded-lg" style="background-color: #CDAA7D;">+</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Subscription:</label>
+                        <select id="subscription" class="w-full border rounded-md px-3 py-2">
+                            <option value="none">One-time Purchase</option>
+                            <option value="daily">Daily Delivery</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Price Info -->
+                <div class="space-y-2 mt-4">
+                    <div class="flex justify-between">
+                        <span class="text-lg font-semibold">Price:</span>
+                        <span id="price" class="text-lg font-semibold" style="color: #947957;">₹{{ variants.0.product_price }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-lg font-semibold">Delivery:</span>
+                        <span id="delivery-charge" class="text-lg text-gray-500">₹{{ variants.0.delivery_price }}</span>
+                    </div>
+                    <div class="flex justify-between border-t pt-2">
+                        <span class="text-xl font-bold">Total:</span>
+                        <span id="total-price" class="text-xl font-bold" style="color: #695b49;">₹{{ variants.0.product_price }}</span>
+                    </div>
+                </div>
+                
+                <!-- Add to Cart Button -->
+                <button id="add-to-cart-btn" 
+                        class="w-full text-white py-3 rounded-lg shadow-md flex items-center justify-center space-x-2" 
+                        style="background-color: #CDAA7D;">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="..." />
+                    </svg>
+                    <span>Add to Cart</span>
+                </button>
+                <!-- Report Button -->
+                <a href="{% url 'web:contact' %}?subject=Report%20({{ seller.store_name }}:%20@{{ seller.user.username }}){% if request.user.is_authenticated %}&name={{ request.user.username|urlencode }}&email={{ request.user.email|urlencode }}{% endif %}"
+   class="w-full flex items-center justify-center gap-2 text-sm font-medium text-red-600 py-2.5 rounded-xl border border-red-300 mt-4 bg-red-50 hover:bg-red-100 transition duration-300 shadow-sm">
+   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M3 3a1 1 0 011-1h1a1 1 0 011 1v1h7.382a1 1 0 01.894 1.447l-1.105 2.211 1.105 2.211A1 1 0 0112.382 11H6v6a1 1 0 11-2 0V3z"/>
+   </svg>
+   Report this product
+</a>
+
+
+
+
+            </div>
+        </div>
+
+        <!-- Product Description Section -->
+        <section class="mt-10 bg-white shadow-lg rounded-xl p-6">
+            <h2 class="text-2xl font-semibold mb-4">Product Details</h2>
+            <hr class="mb-4">
+            <div class="prose max-w-full text-gray-600">
+                {{ product.product_description|safe }}
+            </div>
+        </section>
+    </div>
+</main>
+<script>
+    function changeImage(imgUrl) {
+        document.getElementById("main-img").src = imgUrl;
+    }
+</script>
+<script>
+    document.getElementById('add-to-cart-btn').addEventListener('click', function() {
+        const productId = "{{ product.id }}";
+        const variantId = document.getElementById('choose-size').value;
+        const quantity = document.getElementById('quantity').value;
+        const subscription = document.getElementById('subscription').value;
+    
+        fetch("{% url 'web:add_to_cart' 0 %}".replace("0", productId), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                variant_id: variantId,
+                quantity: quantity,
+                subscription: subscription
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                // SweetAlert notification for adding to cart
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Added to Cart!',
+                    text: 'Your product has been added to the cart 🎉',
+                    showConfirmButton: false,
+                    timer: 1500 // Show for 1.5 seconds
+                });
+            } else {
+                // SweetAlert notification for error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: 'Something went wrong 😢',
+                    showConfirmButton: true
+                });
+            }
+        });
+    });
+</script>
+
+    
+{% block extra_js %}
+    <script src="{% static 'js/product.js' %}"></script>
+{% endblock extra_js %}
+{% endblock content %}

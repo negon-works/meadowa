@@ -1,0 +1,127 @@
+{% extends 'seller-nav.html' %}
+{% load static %}
+
+{% block title %}Add Product | Seller Dashboard{% endblock %}
+
+<!-- Ensure CKEditor JS is loading -->
+<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+
+{% block content %}
+    <div class="flex-1 p-5">
+        <div class="bg-white shadow-md rounded-2xl p-5">
+            <h2 class="text-2xl font-bold text-gray-700 mb-5">Add New Product</h2>
+
+            {% if messages %}
+            <div class="mb-5">
+                {% for message in messages %}
+                <div class="text-green-600 font-semibold">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Form Container -->
+            <form method="post" enctype="multipart/form-data" class="product-form" action="{% url 'web:add_product' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name" class="input-field" placeholder="Enter product name" required>
+
+                    <label for="category">Category:</label>
+                    <select name="category" id="category" class="input-field" required>
+                        <option value="Dairy">Dairy Products</option>
+                        <option value="Poultry">Poultry Products</option>
+                        <option value="Fruits & Vegs">Fruits & Vegs</option>
+                        <option value="Juices & Honeys">Juices & Specialty</option>
+                    </select>
+
+                    <label for="short_description">Short Description:</label>
+                    <textarea name="short_description" id="short_description" class="input-field" placeholder="Short description"></textarea>
+
+                    <label for="product_description">Product Description:</label>
+                    <!-- Ensure CKEditor has the correct ID -->
+                    {{ form.media }}
+                    {{ form.product_description }}
+
+                </div>
+
+                <!-- File Upload with Image Preview -->
+                <div class="image-upload-section">
+                    <img id="image-preview" src="#" alt="Product Image" style="display: none;">
+                    <label for="file-upload" id="upload-btn">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Image
+                    </label>
+                    <input id="file-upload" type="file" name="image" accept="image/*" required onchange="previewImage(event)">
+                </div>
+
+                <!-- Variants Section -->
+                <h3 class="variant-title">Add Variants</h3>
+                <div id="variant-section">
+                    <div class="variant-container" id="variant-container">
+                        <div class="variant-row">
+                            <select name="unit[]" class="input-field" required>
+                                <option value="bottle">Bottle</option>
+                                <option value="packet">Packet</option>
+                            </select>
+                            <input type="text" name="size[]" placeholder="Size (e.g., 500ml, 1kg)" class="input-field" required>
+                            <input type="number" name="price[]" placeholder="Price" step="0.01" class="input-field" required>
+                            <input type="number" name="stock[]" placeholder="Stock" class="input-field" required>
+                            <input type="number" name="delivery_price[]" placeholder="Delivery Price" step="0.01" class="input-field" required>
+                        </div>
+                    </div>
+
+                    <button type="button" id="add-more-btn" class="btn-add-more">➕ Add More Variant</button>
+                </div>
+
+                <br>
+                <button type="submit" class="btn-submit">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript for Adding Variants and Preview Image -->
+    <script>
+        // Add New Variant Row
+        document.getElementById('add-more-btn').addEventListener('click', function () {
+            let container = document.getElementById('variant-container');
+            let newRow = `
+            <div class="variant-row">
+                <select name="unit[]" class="input-field" required>
+                    <option value="bottle">Bottle</option>
+                    <option value="packet">Packet</option>
+                </select>
+                <input type="text" name="size[]" placeholder="Size (e.g., 500ml, 1kg)" class="input-field" required>
+                <input type="number" name="price[]" placeholder="Price" step="0.01" class="input-field" required>
+                <input type="number" name="stock[]" placeholder="Stock" class="input-field" required>
+                <input type="number" name="delivery_price[]" placeholder="Delivery Price" step="0.01" class="input-field" required>
+                <button type="button" class="btn-remove" onclick="this.parentElement.remove()">❌ Remove</button>
+            </div>`;
+            container.insertAdjacentHTML('beforeend', newRow);
+        });
+
+        // Show Image Preview
+        function previewImage(event) {
+            let reader = new FileReader();
+            reader.onload = function () {
+                let output = document.getElementById('image-preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    <!-- CKEditor Initialization -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                if (document.getElementById('product_description')) {
+                    CKEDITOR.replace('product_description');
+                } else {
+                    console.log("Product description field not found.");
+                }
+            }, 500);  // Delay CKEditor initialization by 500ms
+        });
+    </script>
+    
+
+{% endblock %}

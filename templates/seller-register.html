@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+  <meta charset="UTF-8">
+  <title>Meadowa</title>
+  <link rel="stylesheet" href="{% static 'css/seller-register.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <section>
+    <div class="form-box">
+      <div class="form-value">
+        <!-- Login Form -->
+        <form id="loginForm" class="form active">
+          <h2>Login</h2>
+          <div class="inputbox">
+            <ion-icon name="mail-outline"></ion-icon>
+            <input type="email" id="loginEmail" required>
+            <label for="loginEmail">Email</label>
+          </div>
+          <div class="inputbox">
+            <ion-icon id="loginPasswordIcon" name="eye-off-outline" onclick="togglePassword('loginPassword', 'loginPasswordIcon')"></ion-icon>
+            <input type="password" id="loginPassword" required>
+            <label for="loginPassword">Password</label>
+          </div>
+          <button>Log in</button>
+          <div class="register">
+            <p>Don't have an account? <a href="javascript:void(0);" onclick="toggleForm()">Register</a></p>
+          </div>
+        </form>
+
+        <!-- Signup Form (Multi-step) -->
+        <form id="signupForm" class="form active">
+          <h2><ion-icon name="storefront-outline"></ion-icon> Seller Register</h2>
+
+          <!-- Step Progress Dots -->
+          <!-- Step Progress Indicator -->
+          <!-- Updated Step Progress -->
+          <div class="progress">
+            <div class="step-box active" id="step1">Step 1</div>
+            <div class="line"></div>
+            <div class="step-box" id="step2">Step 2</div>
+            <div class="line"></div>
+            <div class="step-box" id="step3">Step 3</div>
+            <div class="line"></div>
+            <div class="step-box" id="step4">Step 4</div>
+            <div class="line"></div>
+            <div class="step-box" id="step5">Step 5</div>
+          </div>
+
+
+          <!-- Step 1: Name -->
+          <!-- Step 1: Name -->
+            <div class="step step-1 active">
+                <div class="inputbox">
+                <input type="text" id="signupFirstName" required>
+                <label for="signupFirstName">First Name</label>
+                </div>
+                <div class="inputbox">
+                <input type="text" id="signupLastName" placeholder="Last Name" >
+                </div>
+                <button type="button" class="next-btn" onclick="nextStep(2, 'signupFirstName')">Next</button>
+                <div class="register">
+                <p>Already have an account? <a href="javascript:void(0);" onclick="toggleForm()">Log in</a></p>
+                </div>
+            </div>
+            
+            <!-- Step 2: Email, Password, and Phone -->
+            <div class="step step-2">
+                <div class="inputbox">
+                <input type="email" id="signupEmail" required>
+                <label for="signupEmail">Email</label>
+                </div>
+                <div class="flex-row">
+                <div class="inputbox">
+                    <ion-icon id="signupPasswordIcon" name="eye-off-outline" onclick="togglePassword('signupPassword', 'signupPasswordIcon')"></ion-icon>
+                    <input type="password" id="signupPassword" required>
+                    <label for="signupPassword">Password</label>
+                </div>
+                &nbsp;&nbsp;
+                <div class="inputbox">
+                    <ion-icon id="signupConfirmPasswordIcon" name="eye-off-outline" onclick="togglePassword('signupConfirmPassword', 'signupConfirmPasswordIcon')"></ion-icon>
+                    <input type="password" id="signupConfirmPassword" required>
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                </div>
+                </div>
+                <div class="flex-row">
+                  <div class="inputbox">
+                  <input type="tel" id="phone" pattern="[0-9]{10}" maxlength="10" required>
+                  <label for="phone">Phone (+91)</label>
+                  </div>
+                  &nbsp;&nbsp;&nbsp;
+                  <div class="inputbox">
+                   
+                  </div>
+                </div>
+                <button type="button" class="prev-btn" onclick="nextStep(1)">Back</button>
+                <button type="button" class="next-btn" onclick="nextStep(3, 'signupEmail')">Next</button>
+            </div>
+            
+            <!-- Step 4: ID Proof -->
+            <div class="step step-3">
+                <div class="inputbox">
+                <select id="idProofType" required>
+                    <option value="" disabled selected>Select ID Proof</option>
+                    <option value="Aadhar">Aadhar</option>
+                    <option value="PAN">PAN</option>
+                    <option value="Passport">Passport</option>
+                    <option value="License">License</option>
+                </select>
+                <label for="idProofType" id="idproof">ID Proof Type:</label>
+                </div>
+                <div class="inputbox">
+                <input type="text" id="idProofNumber" required>
+                <label for="idProofNumber">ID Proof Number</label>
+                </div>
+                <div class="inputbox">
+                <input type="file" id="idProofUpload" required>
+                <label for="idProofUpload">Upload ID Proof <i class="fas fa-upload"></i></label>
+                </div>
+                <button type="button" class="prev-btn" onclick="nextStep(2)">Back</button>
+                <button type="button" class="next-btn" onclick="nextStep(4, 'idProofNumber')">Next</button>
+            </div>
+            
+            <!-- Step 5: Address -->
+            <div class="step step-4">
+                <div class="inputbox">
+                <input type="text" id="streetAddress" required>
+                <label for="streetAddress">Street Address</label>
+                </div>
+                <div class="inputbox">
+                <input type="text" id="streetAddress2" placeholder="Street Address Line 2">
+                </div>
+                <div class="inputbox">
+                <input type="text" id="city" required>
+                <label for="city">City</label>
+                </div>
+                <div class="inputbox">
+                <select id="state" required>
+                  <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                  
+                </select>
+                </div>
+                <div class="flex-row">
+                <div class="inputbox">
+                    <input type="text" id="zipCode" pattern="[0-9]*" maxlength="6" required>
+                    <label for="zipCode">Postal/ZIP Code</label>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div class="inputbox">
+                    
+                </div>
+                </div>
+                <button type="button" class="prev-btn" onclick="nextStep(3)">Back</button>
+                <button type="button" class="next-btn" onclick="nextStep(5, 'phone')">Next</button>
+            </div>
+            
+            <!-- Step 6: About Seller -->
+            <div class="step step-5">
+                <div class="inputbox">
+                <textarea id="aboutSeller" ></textarea>
+                <label for="aboutSeller">About the Seller</label>
+                </div>
+                <button type="button" class="prev-btn" onclick="nextStep(4)">Back</button>
+                <button type="button" class="next-btn" onclick="submitForm()">Submit</button>
+            </div>  
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src='https://unpkg.com/ionicons@5.5.2/dist/ionicons.js'></script>
+  <script src="{% static 'js/seller-register.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+.btn-seller-dashboard {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #CDAA7D;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-seller-dashboard:hover {
+    background-color: #D7B188;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-seller-dashboard:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-seller-dashboard[style*="opacity: 0.5;"] {
+    background-color: #D3D3D3; /* Lighter gray when disabled */
+}
+
+#editModal {
+    backdrop-filter: blur(4px);
+  }

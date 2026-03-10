@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-xl mx-auto mt-28 p-6 bg-white shadow-md rounded-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Become a Seller</h2>
+
+    <form method="post" class="space-y-5">
+        {% csrf_token %}
+        
+        <div>
+            <label for="{{ form.store_name.id_for_label }}" class="block text-sm font-medium text-gray-700">Store Name</label>
+            {{ form.store_name }}
+        </div>
+
+        <div>
+            <label for="{{ form.phone_number.id_for_label }}" class="block text-sm font-medium text-gray-700">Phone Number</label>
+            {{ form.phone_number }}
+        </div>
+
+        <div>
+            <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">Address</label>
+            {{ form.address }}
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition duration-200">
+                Submit Application
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

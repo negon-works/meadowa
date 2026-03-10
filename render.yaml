@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: meadowa
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn meadowa.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: .onrender.com
+      - key: CSRF_TRUSTED_ORIGINS
+        value: https://*.onrender.com
+      - key: SECRET_KEY
+        generateValue: true

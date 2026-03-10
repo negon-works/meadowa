@@ -1,0 +1,67 @@
+{% extends "seller-nav.html" %}
+{% block content %}
+<h2 class="text-2xl font-semibold mt-10">Manage Orders</h2>
+
+<!-- Orders List -->
+<div class="mt-6">
+    {% if orders %}
+        <div class="space-y-6">
+            {% for order in orders %}
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-bold text-lg">Order #{{ order.id }}</span>
+                        <span class="text-sm text-gray-500">{{ order.ordered_at|date:"M d, Y - H:i A" }}</span>
+                        
+                    </div>
+                    <p class="text-gray-700 mb-6"><strong>Shipping Address:</strong> {{ order.shipping_address.full_address }}</p>
+
+                    <!-- Order Status -->
+                    <div class="flex items-center mb-2">
+                        <span class="font-semibold text-gray-700">Status:</span>
+                        <span class="ml-2">{{ order.order_status|capfirst }}</span>
+                    </div>
+
+                    {% if order.status_updated_at %}
+                        <p class="text-sm text-gray-500 mb-4">Last updated: {{ order.status_updated_at|date:"M d, Y - H:i A" }}</p>
+                    {% endif %}
+
+                    <!-- Update Status Form -->
+                    <form action="{% url 'web:update_order_status' order.id %}" method="POST" class="w-full mb-4">
+                        {% csrf_token %}
+                        <div class="flex items-center gap-4">
+                            <select name="order_status" class="p-2 border rounded-md w-1/2">
+                                <option value="confirmed" {% if order.order_status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="shipped" {% if order.order_status == 'shipped' %}selected{% endif %}>Shipped</option>
+                                <option value="out_for_delivery" {% if order.order_status == 'out_for_delivery' %}selected{% endif %}>Out for Delivery</option>
+                                <option value="delivered" {% if order.order_status == 'delivered' %}selected{% endif %}>Delivered</option>
+
+                            </select>
+                            <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Update Status</button>
+                        </div>
+                    </form>
+
+                    <!-- Order Items -->
+                    <div class="mt-4 space-y-4">
+                        {% for item in order.order_items.all %}
+                            <div class="flex items-center border-b pb-4">
+                                <div class="w-1/4">
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-16 h-16 object-cover rounded-md">
+                                </div>
+                                <div class="w-3/4 pl-4">
+                                    <p class="text-lg font-semibold">{{ item.product.name }} ({{ item.variant.size }})</p>
+                                    <p class="text-sm text-gray-600">Qty: {{ item.quantity }}</p>
+                                    <p class="text-sm text-gray-600">Price: ₹{{ item.product_price }} x {{ item.quantity }}</p>
+                                    <p class="text-sm text-gray-600">Delivery: ₹{{ item.delivery_price }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-gray-500">You don't have any orders yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

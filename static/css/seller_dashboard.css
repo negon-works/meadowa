@@ -1,0 +1,72 @@
+/* General styles */
+body {
+    background-color: #f3f4f6;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Sidebar styles */
+.sidebar {
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+.sidebar a {
+    transition: background-color 0.3s;
+}
+.sidebar a:hover {
+    background-color: #f1f5f9;
+}
+
+/* Summary cards */
+.card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    
+    font-weight: 600;
+    color: #374151;
+}
+
+.card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+thead {
+    background-color: #f9fafb;
+}
+th, td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+tr:hover {
+    background-color: #f3f4f6;
+}
+
+/* Chart container */
+.chart-container {
+    height: 350px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .grid-cols-4 {
+        grid-template-columns: 1fr 1fr;
+    }
+    .sidebar {
+        width: 100%;
+        position: relative;
+    }
+    .flex {
+        flex-direction: column;
+    }
+}
